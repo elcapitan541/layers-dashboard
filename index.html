@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>LAYERS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    :root {
+      --bg: #06141B;
+      --card: #11212D;
+      --border: #253745;
+      --text: #CCD0CF;
+      --muted: #9BA8AB;
+    }
+
+    body.light {
+      --bg: #CCD0CF;
+      --card: #9BA8AB;
+      --border: #4A5C6A;
+      --text: #06141B;
+      --muted: #253745;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 24px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    /* Hora */
+    .time h1 {
+      margin: 0;
+      font-size: 3rem;
+    }
+
+    .time p {
+      margin: 4px 0 0;
+      color: var(--muted);
+    }
+
+    /* Buscador */
+    .search input {
+      width: 100%;
+      padding: 12px;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      outline: none;
+      font-size: 1rem;
+    }
+
+    /* Nota */
+    .note textarea {
+      width: 100%;
+      height: 90px;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      resize: none;
+      outline: none;
+      font-size: 0.95rem;
+    }
+
+    /* Links */
+    .links {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .links a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: transform 0.15s ease;
+    }
+
+    .links a:hover {
+      transform: translateX(3px);
+    }
+
+    /* Stats */
+    .stats p {
+      margin: 6px 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* Botón */
+    button {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button:hover {
+      background: rgba(255,255,255,0.03);
+    }
+  </style>
+</head>
+<body>
+
+  <main class="container">
+
+    <!-- Hora -->
+    <section class="card time">
+      <h1 id="clock">00:00</h1>
+      <p id="date">---</p>
+    </section>
+
+    <!-- Buscador -->
+    <section class="card search">
+      <input id="searchInput" type="text" placeholder="Buscar en la web...">
+    </section>
+
+    <!-- Nota -->
+    <section class="card note">
+      <textarea id="note" placeholder="Escribe una idea o recordatorio..."></textarea>
+    </section>
+
+    <!-- Links -->
+    <section class="card links">
+      <a href="https://github.com" target="_blank">GitHub</a>
+      <a href="https://codepen.io" target="_blank">CodePen</a>
+      <a href="https://youtube.com" target="_blank">YouTube</a>
+      <a href="https://spotify.com" target="_blank">Spotify</a>
+    </section>
+
+    <!-- Stats -->
+    <section class="card stats">
+      <p>Visitas: <span id="visits">0</span></p>
+      <p>Tiempo activo: <span id="activeTime">0s</span></p>
+    </section>
+
+    <!-- Tema -->
+    <button id="toggleTheme">Cambiar tema</button>
+
+  </main>
+
+  <script>
+    // Hora y fecha
+    function updateTime() {
+      const now = new Date();
+      clock.textContent = now.toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      date.textContent = now.toDateString();
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    // Buscador
+    searchInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && searchInput.value.trim()) {
+        location.href =
+          'https://duckduckgo.com/?q=' +
+          encodeURIComponent(searchInput.value);
+      }
+    });
+
+    // Nota
+    note.value = localStorage.getItem('layers-note') || '';
+    note.addEventListener('input', () =>
+      localStorage.setItem('layers-note', note.value)
+    );
+
+    // Visitas
+    let visits =
+      Number(localStorage.getItem('layers-visits') || 0) + 1;
+    localStorage.setItem('layers-visits', visits);
+    visitsEl = document.getElementById('visits');
+    visitsEl.textContent = visits;
+
+    // Tiempo activo
+    let seconds = 0;
+    setInterval(() => {
+      seconds++;
+      activeTime.textContent = seconds + 's';
+    }, 1000);
+
+    // Tema
+    toggleTheme.onclick = () =>
+      document.body.classList.toggle('light');
+  </script>
+
+</body>
+  </html>
