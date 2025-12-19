@@ -2,212 +2,174 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>LAYERS</title>
+  <title>Minimal Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Fuente -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
   <style>
-    :root {
-      --bg: #06141B;
-      --card: #11212D;
-      --border: #253745;
-      --text: #CCD0CF;
-      --muted: #9BA8AB;
-    }
-
-    body.light {
-      --bg: #CCD0CF;
-      --card: #9BA8AB;
-      --border: #4A5C6A;
-      --text: #06141B;
-      --muted: #253745;
-    }
-
     * {
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
-      font-family: system-ui, sans-serif;
+      font-family: 'Inter', sans-serif;
     }
 
     body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
+      height: 100vh;
+      background: radial-gradient(circle at top, #1a1a1a, #0b0b0b);
+      color: #fff;
+      overflow: hidden;
     }
 
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 24px;
-      display: grid;
-      gap: 16px;
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px;
-    }
-
-    /* Hora */
-    .time h1 {
-      margin: 0;
-      font-size: 3rem;
-    }
-
-    .time p {
-      margin: 4px 0 0;
-      color: var(--muted);
-    }
-
-    /* Buscador */
-    .search input {
-      width: 100%;
-      padding: 12px;
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid var(--border);
-      color: var(--text);
-      outline: none;
-      font-size: 1rem;
-    }
-
-    /* Nota */
-    .note textarea {
-      width: 100%;
-      height: 90px;
-      background: transparent;
-      border: none;
-      color: var(--text);
-      resize: none;
-      outline: none;
-      font-size: 0.95rem;
-    }
-
-    /* Links */
-    .links {
+    /* ===== NAV LEFT ===== */
+    .nav {
+      position: absolute;
+      top: 50%;
+      left: 40px;
+      transform: translateY(-50%);
       display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: 18px;
+      font-size: 13px;
+      letter-spacing: 1px;
+      opacity: 0.7;
     }
 
-    .links a {
-      color: var(--muted);
+    .nav a {
+      color: #fff;
       text-decoration: none;
-      transition: transform 0.15s ease;
     }
 
-    .links a:hover {
-      transform: translateX(3px);
+    .nav a:hover {
+      opacity: 1;
     }
 
-    /* Stats */
-    .stats p {
-      margin: 6px 0;
-      font-size: 0.9rem;
-      color: var(--muted);
+    /* ===== CENTER HERO ===== */
+    .hero {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
     }
 
-    /* Botón */
-    button {
-      background: none;
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 10px;
-      border-radius: 10px;
-      cursor: pointer;
-      width: 100%;
+    .hero h1 {
+      font-size: 140px;
+      font-weight: 600;
+      letter-spacing: 8px;
+      color: transparent;
+      -webkit-text-stroke: 1px #fff;
+      opacity: 0.25;
     }
 
-    button:hover {
-      background: rgba(255,255,255,0.03);
+    .hero img {
+      width: 520px;
+      margin-top: -90px;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,.6));
+    }
+
+    /* ===== WIDGETS ===== */
+    .widget {
+      position: absolute;
+      font-size: 13px;
+      opacity: 0.75;
+      max-width: 200px;
+    }
+
+    .top-right {
+      top: 30px;
+      right: 40px;
+      text-align: right;
+    }
+
+    .bottom-left {
+      bottom: 30px;
+      left: 40px;
+    }
+
+    .bottom-right {
+      bottom: 30px;
+      right: 40px;
+      text-align: right;
+    }
+
+    .mid-right {
+      top: 55%;
+      right: 80px;
+    }
+
+    .mid-left {
+      top: 40%;
+      left: 80px;
+    }
+
+    /* ===== FOOT LINKS ===== */
+    .socials {
+      display: flex;
+      gap: 16px;
+      margin-top: 6px;
+    }
+
+    .socials a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 12px;
+    }
+
+    .socials a:hover {
+      color: #fff;
     }
   </style>
 </head>
 <body>
 
-  <main class="container">
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="#">HOME</a>
+    <a href="#">PROJECTS</a>
+    <a href="#">GITHUB</a>
+    <a href="#">ABOUT</a>
+    <a href="#">CONTACT</a>
+  </nav>
 
-    <!-- Hora -->
-    <section class="card time">
-      <h1 id="clock">00:00</h1>
-      <p id="date">---</p>
-    </section>
+  <!-- CENTER -->
+  <div class="hero">
+    <h1>TRUENO</h1>
+    <!-- Puedes cambiar esta imagen -->
+    <img src="https://i.imgur.com/6XGQk7y.png" alt="Hero image">
+  </div>
 
-    <!-- Buscador -->
-    <section class="card search">
-      <input id="searchInput" type="text" placeholder="Buscar en la web...">
-    </section>
+  <!-- WIDGETS -->
+  <div class="widget top-right">
+    EN · ES<br>
+    21:47
+  </div>
 
-    <!-- Nota -->
-    <section class="card note">
-      <textarea id="note" placeholder="Escribe una idea o recordatorio..."></textarea>
-    </section>
+  <div class="widget mid-right">
+    STATUS<br>
+    Focus Mode
+  </div>
 
-    <!-- Links -->
-    <section class="card links">
-      <a href="https://github.com" target="_blank">GitHub</a>
-      <a href="https://codepen.io" target="_blank">CodePen</a>
-      <a href="https://youtube.com" target="_blank">YouTube</a>
-      <a href="https://spotify.com" target="_blank">Spotify</a>
-    </section>
+  <div class="widget mid-left">
+    LAST UPDATE<br>
+    Today
+  </div>
 
-    <!-- Stats -->
-    <section class="card stats">
-      <p>Visitas: <span id="visits">0</span></p>
-      <p>Tiempo activo: <span id="activeTime">0s</span></p>
-    </section>
+  <div class="widget bottom-left">
+    LINKS
+    <div class="socials">
+      <a href="#">GitHub</a>
+      <a href="#">CodePen</a>
+      <a href="#">YouTube</a>
+    </div>
+  </div>
 
-    <!-- Tema -->
-    <button id="toggleTheme">Cambiar tema</button>
-
-  </main>
-
-  <script>
-    // Hora y fecha
-    function updateTime() {
-      const now = new Date();
-      clock.textContent = now.toLocaleTimeString([], {
-        hour: '2-digit',
-        minute: '2-digit'
-      });
-      date.textContent = now.toDateString();
-    }
-    setInterval(updateTime, 1000);
-    updateTime();
-
-    // Buscador
-    searchInput.addEventListener('keydown', e => {
-      if (e.key === 'Enter' && searchInput.value.trim()) {
-        location.href =
-          'https://duckduckgo.com/?q=' +
-          encodeURIComponent(searchInput.value);
-      }
-    });
-
-    // Nota
-    note.value = localStorage.getItem('layers-note') || '';
-    note.addEventListener('input', () =>
-      localStorage.setItem('layers-note', note.value)
-    );
-
-    // Visitas
-    let visits =
-      Number(localStorage.getItem('layers-visits') || 0) + 1;
-    localStorage.setItem('layers-visits', visits);
-    visitsEl = document.getElementById('visits');
-    visitsEl.textContent = visits;
-
-    // Tiempo activo
-    let seconds = 0;
-    setInterval(() => {
-      seconds++;
-      activeTime.textContent = seconds + 's';
-    }, 1000);
-
-    // Tema
-    toggleTheme.onclick = () =>
-      document.body.classList.toggle('light');
-  </script>
+  <div class="widget bottom-right">
+    BUILD<br>
+    Minimal v1.0
+  </div>
 
 </body>
-  </html>
+</html>
